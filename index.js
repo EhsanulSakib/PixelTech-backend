@@ -6,10 +6,7 @@ const consoleMessage = require("./utils/console.utils");
 const port = process.env.PORT || 8080;
 
 mongoose
-  .connect(process.env.ATLAS_URI,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  .connect(process.env.ATLAS_URI)
   .then( async () => {
     consoleMessage.successMessage("MongoDB connected successfully");
   })
