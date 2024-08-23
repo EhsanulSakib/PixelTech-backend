@@ -4,19 +4,31 @@ const validator = require("validator");
 const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema({
+  firstName: {
+    type: String
+  },
+
+  lastName: {
+    type: String
+  },
+
   name: {
     type: String,
-    required: [true, "Please enter your name"],
-    maxLength: [30, "Name cannot exceed 30 characters"],
-    minLength: [4, "Name should have more than 4 characters"],
+    required: [true, "Please enter your name"]
   },
+
   email: {
     type: String,
     required: [true, "Please enter your email"],
-    unique: [true, "Email already exists, Please provide another email"],
     validate: [validator.isEmail, "Please enter a valid email"],
+    unique: [true, "Email already exists, Please provide another email"],
   },
-  password: {
+
+  phoneNumber: {
+    type: String
+  },
+
+  password: { 
     type: String,
     required: [true, "Please enter your password"],
     validator: (value) => {
@@ -31,27 +43,44 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 8 characters"],
     maxLength: [20, "Password should be less than 20 characters"],
   },
+
   avatar: {
     type: String,
     default: "https://i.ibb.co/4pDNDk1/avatar.png"
   },
+
   role: {
     type: String,
     default: "user"
   },
+
+  socialId: {
+    type: String,
+    unique: [true, "This user already exist."]
+  },
+
+  passwordResetToken: String,
+
+  emailConfirmationToken: String,
+
   createdAt: {
     type: Date,
     default: Date.now
   },
-  resetPasswordToken: String,
-  // resetPasswordExpire: Date
+
+  updatedAt:{
+    type: Date,
+    default: Date.now
+  },
 
   status: {
     type: String,
     enum:["active", "inactive"],
     default: "active"
   }
-});
+  },
+  {timestamps: true}
+);
 
 
 // middleware to encrypt password

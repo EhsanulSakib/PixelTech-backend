@@ -80,3 +80,5 @@ const sendEmailConfirmationEmail = (user, url, subject, res) => {
     }
   })
 }
+
+module.exports = sendEmailConfirmationEmail
